@@ -30,7 +30,7 @@ public class Movement : MonoBehaviour {
 			if (coll.tag == "Page") {
 				print ("AloPAGE");
 				gameObject.GetComponent<Rigidbody2D> ().AddForce (Vector3.up * kickPage * Time.deltaTime);
-				Destroy (coll);
+				Destroy (coll.gameObject);
 				canEat = false;
 			}
 		}
