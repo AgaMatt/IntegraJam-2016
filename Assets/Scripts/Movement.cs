@@ -8,9 +8,12 @@ public class Movement : MonoBehaviour
 	bool canJump, canBounce;
 	Rigidbody2D _rb;
 	public Vector2 playerSpeed;
+	Animator playerAnim;
 
 	void Start ()
 	{	
+		playerAnim = GetComponent<Animator> ();
+		print (playerAnim);
 		canJump = true;
 		canBounce = true;
 		_rb = GetComponent<Rigidbody2D> ();
@@ -27,6 +30,7 @@ public class Movement : MonoBehaviour
 		} else {
 			//print ("CANT");
 		}
+		animPlayer ();
 
 	}
 
@@ -74,5 +78,13 @@ public class Movement : MonoBehaviour
 			print ("DROP TROLLERINO");
 		}
 	}
-
+	void animPlayer()
+	{
+		if(playerSpeed.y < 0)
+		{
+			playerAnim.SetBool ("Descendo",true);
+		} else if(playerSpeed.y > 0){
+			playerAnim.SetBool ("Descendo", false);
+		}
+	}
 }
