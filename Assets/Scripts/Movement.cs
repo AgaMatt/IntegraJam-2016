@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Movement : MonoBehaviour
 {
-
+	int gameOver;
 	public float forca, kickPage, kickBook;
 	bool canJump, canBounce;
 	Rigidbody2D _rb;
 	public Vector2 playerSpeed;
 	Animator playerAnim;
-
+	public Animator ExplosionBook;
 	void Start ()
 	{	
+		gameOver = 3;
 		playerAnim = GetComponent<Animator> ();
 		print (playerAnim);
 		canJump = true;
@@ -26,11 +28,14 @@ public class Movement : MonoBehaviour
 		Bounce ();
 		if (Vector2.Distance (playerSpeed, new Vector2 (0, 0)) < 0.1) {
 			canBounce = true;
-			print ("CAN BOUNCE");
+			//print ("CAN BOUNCE");
 		} else {
 			//print ("CANT");
 		}
 		animPlayer ();
+		if(gameOver<0){
+			SceneManager.LoadScene ("GameIn");
+		}
 
 	}
 
@@ -44,23 +49,22 @@ public class Movement : MonoBehaviour
 				gameObject.GetComponent<Rigidbody2D> ().AddForce (Vector3.up * kickPage * Time.deltaTime);
 				canBounce = false;
 				canJump = true;
+				Destroy (coll.gameObject);
 			} else if (coll.tag == "Book") {
 				_rb.velocity = new Vector2 (0, 0);	
 				GetComponent<Rigidbody2D> ().drag = 1.3f;
 				gameObject.GetComponent<Rigidbody2D> ().AddForce (Vector3.up * kickBook * Time.deltaTime);
 				canBounce = false;
 				canJump = true;
-			}
-				
-		}
-		if (coll.tag == "Page" || coll.tag == "Book") {
-			Destroy (coll.gameObject);
+				Destroy (coll.gameObject);
+			}				
 		}
 	}
 
 	void OnCollisionEnter2D (Collision2D coll)
 	{
 		//print ("AAAAAAAAAAS"); 
+		gameOver--;
 		GetComponent<Rigidbody2D> ().drag = 1.3f;
 		canJump = true;
 		canBounce = false;
@@ -75,7 +79,7 @@ public class Movement : MonoBehaviour
 			//	print ("AAAA");
 			GetComponent<Rigidbody2D> ().drag = 0;
 			GetComponent<Rigidbody2D> ().AddForce (Vector3.down * forca * Time.deltaTime);
-			print ("DROP TROLLERINO");
+		//	print ("DROP TROLLERINO");
 		}
 	}
 	void animPlayer()

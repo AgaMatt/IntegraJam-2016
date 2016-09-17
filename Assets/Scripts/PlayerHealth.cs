@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour {
+public class PlayerHealth : MonoBehaviour {
 
 	int fails;
 	void Start()
@@ -20,7 +20,9 @@ public class Player : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll)
 	{
+		print ("To morrendo");
 		if(coll.gameObject.tag == "Floor"){
+			print ("Mas consegui");
 			fails--;
 		}
 			
