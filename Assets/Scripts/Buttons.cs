@@ -30,7 +30,12 @@ public class Buttons : MonoBehaviour
 	}
 
 	public void Restart ()
-	{
+	{ 
 		SceneManager.LoadScene ("GameIn");
+	}
+
+	public void Quit ()
+	{
+		Application.Quit ();
 	}
 }
