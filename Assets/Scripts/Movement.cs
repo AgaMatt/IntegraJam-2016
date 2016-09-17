@@ -33,14 +33,16 @@ public class Movement : MonoBehaviour
 	{
 		if (canBounce) {
 			if (coll.tag == "Page") {
+				_rb.velocity = new Vector2 (0, 0);
 				//print ("AloPAGE");
-				gameObject.GetComponent<Rigidbody2D> ().velocity = (Vector3.up * kickPage * Time.deltaTime);
+				gameObject.GetComponent<Rigidbody2D> ().AddForce(Vector3.up * kickPage * Time.deltaTime);
 				canBounce = false;
 				canJump = false;
 			}else if(coll.tag == "Book"){
-				gameObject.GetComponent<Rigidbody2D> ().velocity = (Vector3.up * kickBook * Time.deltaTime);
+				_rb.velocity = new Vector2 (0, 0);
+				gameObject.GetComponent<Rigidbody2D> ().AddForce (Vector3.up * kickBook * Time.deltaTime);
 				canBounce = false;
-				canJump = false;
+				canJump = true;
 			}
 				
 		}
@@ -52,16 +54,19 @@ public class Movement : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D coll)
 	{
 		//print ("AAAAAAAAAAS"); 
-		canJump = false;
+		canJump = true;
 		canBounce = false;
 	}
 
 	void Bounce()
 	{
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			canJump = true;
-			//	print ("AAAA");
-			GetComponent<Rigidbody2D> ().velocity = (Vector3.down * forca * Time.deltaTime);
-		}
+			if (Input.GetKeyDown (KeyCode.Space)) {
+			_rb.velocity = new Vector2 (0, 0);
+				canJump = true;
+				canBounce = true;
+				//	print ("AAAA");
+				GetComponent<Rigidbody2D> ().AddForce (Vector3.down * forca * Time.deltaTime);
+			}
 	}
+
 }
